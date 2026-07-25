@@ -1,0 +1,26 @@
+---
+title: "Evaluating RAG Systems: Beyond Accuracy"
+date: "2026-06-10"
+description: "Metrics and frameworks for measuring retrieval and generation quality."
+tags: ["RAG", "Evaluation", "LLM"]
+---
+
+## Beyond "Does it work?"
+
+Evaluating RAG systems requires measuring both retrieval and generation quality separately. A correct answer with poor sources is still a broken system.
+
+## Retrieval Metrics
+
+- **Recall@k** — What fraction of relevant documents appear in the top k results?
+- **MRR** — Mean Reciprocal Rank — how early does the first relevant doc appear?
+- **NDCG** — Normalized Discounted Cumulative Gain — rewards relevant docs ranked higher.
+
+## Generation Metrics
+
+- **Faithfulness** — Is the answer grounded in the retrieved context?
+- **Answer Relevance** — Does the answer actually address the question?
+- **Context Relevance** — Are the retrieved documents relevant to the query?
+
+## Tools
+
+Use RAGAS, TruLens, or DeepEval for systematic evaluation. Don't rely on vibe checks.

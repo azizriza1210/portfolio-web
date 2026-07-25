@@ -1,0 +1,28 @@
+---
+title: "Chunking Strategies for Better Document Retrieval"
+date: "2026-06-28"
+description: "How the way you split your documents changes retrieval quality."
+tags: ["RAG", "Embeddings", "Python"]
+---
+
+## Why Chunking Matters
+
+The way you split documents into chunks directly impacts retrieval quality. Too small, and you lose context. Too large, and you dilute the embedding signal.
+
+## Common Strategies
+
+### Fixed-size Chunking
+Split by character count. Simple but often breaks mid-sentence.
+
+### Semantic Chunking
+Split at natural boundaries — paragraphs, sections, sentences.
+
+### Recursive Chunking
+Split recursively by separators: `\n\n` → `\n` → ` ` → `""`.
+
+### Overlap
+Add overlapping text between chunks to preserve context across boundaries.
+
+## Recommendation
+
+Start with recursive chunking with 10-20% overlap. Measure retrieval quality, then tune.

@@ -1,0 +1,32 @@
+---
+title: "RAG Chatbot"
+date: "2026-07-01"
+description: "Retrieval-augmented chat over custom documents using LangChain and Pinecone."
+tags: ["Python", "LangChain", "Pinecone", "OpenAI"]
+demoUrl: "#"
+repoUrl: "#"
+---
+
+## Overview
+
+A conversational AI that answers questions based on your custom document collection. Upload PDFs, markdown files, or plain text, and the chatbot retrieves relevant passages to ground its responses.
+
+## Architecture
+
+```
+User → Chat UI → FastAPI → LangChain Agent
+                              ├── Embedding Model
+                              ├── Pinecone Vector DB
+                              └── OpenAI GPT
+```
+
+## Key Features
+
+- Multi-turn conversation with memory
+- Source citation for every answer
+- Streaming responses via Server-Sent Events
+- Document management dashboard
+
+## Technical Highlights
+
+Built a custom retrieval chain that combines dense embeddings with BM25 sparse retrieval for hybrid search, improving recall by 23% over embedding-only search.

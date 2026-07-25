@@ -1,0 +1,43 @@
+---
+title: "Getting Started with Retrieval-Augmented Generation"
+date: "2026-07-15"
+description: "A practical guide to building your first RAG pipeline from scratch."
+tags: ["RAG", "LLM", "LangChain"]
+---
+
+## What is RAG?
+
+Retrieval-Augmented Generation (RAG) combines the power of large language models with external knowledge retrieval. Instead of relying solely on what the model learned during training, RAG fetches relevant documents from a knowledge base and injects them into the prompt.
+
+## Why RAG?
+
+- **Up-to-date knowledge** — Your model doesn't need retraining when information changes.
+- **Domain specificity** — Use your own documents, not generic web data.
+- **Source attribution** — Every answer can cite its sources.
+- **Reduced hallucination** — Grounding in real documents reduces fabrication.
+
+## Basic Architecture
+
+```
+Query → Embedding → Vector Search → Retrieved Docs → LLM → Answer
+```
+
+1. Convert the user query into an embedding vector
+2. Search your vector database for similar document chunks
+3. Retrieve the top-k most relevant chunks
+4. Feed them into the LLM prompt alongside the query
+5. Return the generated answer
+
+## Getting Started
+
+```python
+from langchain.embeddings import OpenAIEmbeddings
+from langchain.vectorstores import Pinecone
+
+embeddings = OpenAIEmbeddings()
+vectorstore = Pinecone.from_documents(docs, embeddings, index_name="my-index")
+
+results = vectorstore.similarity_search("What is RAG?", k=3)
+```
+
+Stay tuned for more posts diving deeper into each component.

@@ -1,0 +1,25 @@
+---
+title: "Multi-modal RAG"
+date: "2026-05-20"
+description: "Text and image retrieval for mixed-media knowledge bases."
+tags: ["Python", "CLIP", "ChromaDB", "Multimodal"]
+demoUrl: "#"
+repoUrl: "#"
+---
+
+## Overview
+
+Extends standard RAG to handle both text and images. Users can search with text queries and retrieve relevant images, diagrams, or text passages from a unified knowledge base.
+
+## Approach
+
+- **Text embeddings** via OpenAI
+- **Image embeddings** via OpenAI CLIP
+- **Unified vector store** in ChromaDB with metadata filtering
+- **Multi-modal response** — answers include both text and relevant images
+
+## Challenges Solved
+
+- Aligning text and image embedding spaces
+- Efficient storage of high-dimensional image embeddings
+- Ranking fusion across modalities
