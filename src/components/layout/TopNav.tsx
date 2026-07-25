@@ -35,7 +35,7 @@ export function TopNav() {
       ))}
       endContent={
         <HStack gap={1.5} className="items-center">
-          <StatusDot variant="success" label="Available" isPulsing />
+          <StatusDot variant="success" label="Available for work" isPulsing />
           <Text type="label" color="secondary">Open to work</Text>
         </HStack>
       }
