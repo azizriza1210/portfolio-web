@@ -6,6 +6,9 @@ import {
   TopNavHeading,
   TopNavItem,
 } from "@astryxdesign/core/TopNav";
+import { StatusDot } from "@astryxdesign/core/StatusDot";
+import { Text } from "@astryxdesign/core/Text";
+import { HStack } from "@astryxdesign/core/Layout";
 
 const links = [
   { href: "/projects", label: "Projects" },
@@ -20,9 +23,9 @@ export function TopNav() {
   return (
     <TopNavBar
       heading={
-        <TopNavHeading heading="Aziz Riza" headingHref="/" />
+        <TopNavHeading heading="AZIZ" headingHref="/" />
       }
-      startContent={links.map(({ href, label }) => (
+      centerContent={links.map(({ href, label }) => (
         <TopNavItem
           key={href}
           label={label}
@@ -30,6 +33,12 @@ export function TopNav() {
           isSelected={pathname === href}
         />
       ))}
+      endContent={
+        <HStack gap={1.5} className="items-center">
+          <StatusDot variant="success" label="Available" isPulsing />
+          <Text type="label" color="secondary">Open to work</Text>
+        </HStack>
+      }
     />
   );
 }
