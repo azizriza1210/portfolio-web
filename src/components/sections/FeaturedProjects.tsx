@@ -1,7 +1,10 @@
-"use client";
-
-import Link from "next/link";
-import { SpringDiv } from "@/components/motion/SpringDiv";
+import { VStack, HStack } from "@astryxdesign/core/Layout";
+import { Heading, Text } from "@astryxdesign/core/Text";
+import { ClickableCard } from "@astryxdesign/core/ClickableCard";
+import { Token } from "@astryxdesign/core/Token";
+import { Section } from "@astryxdesign/core/Section";
+import { Link } from "@astryxdesign/core/Link";
+import { Grid } from "@astryxdesign/core/Grid";
 
 const featured = [
   {
@@ -29,57 +32,43 @@ const featured = [
 
 export function FeaturedProjects() {
   return (
-    <section className="py-16 sm:py-20 px-4 sm:px-6">
-      <div className="mx-auto max-w-3xl">
-        <SpringDiv
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-        >
-          <h2 className="text-2xl font-semibold tracking-tight text-foreground">
-            Featured Projects
-          </h2>
-        </SpringDiv>
-        <div className="mt-8 grid gap-4 sm:grid-cols-3">
-          {featured.map((project, i) => (
-            <SpringDiv
+    <Section dividers={["top"]}>
+      <VStack gap={8} className="max-w-3xl mx-auto px-4">
+        <Heading level={2}>
+          Featured Projects
+        </Heading>
+        <Grid columns={3} gap={4}>
+          {featured.map((project) => (
+            <ClickableCard
               key={project.slug}
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ delay: i * 0.1 }}
+              label={project.title}
+              href={`/projects/${project.slug}`}
+              padding={5}
             >
-              <Link
-                href={`/projects/${project.slug}`}
-                className="block p-5 rounded-xl border border-border bg-surface hover:bg-surface/70 transition-colors h-full"
-              >
-                <h3 className="font-medium text-foreground">{project.title}</h3>
-                <p className="mt-1.5 text-sm text-muted line-clamp-2">
-                  {project.description}
-                </p>
-                <div className="mt-3 flex flex-wrap gap-1.5">
+              <VStack gap={3}>
+                <VStack gap={1.5}>
+                  <Text type="body" weight="medium">
+                    {project.title}
+                  </Text>
+                  <Text type="supporting" color="secondary">
+                    {project.description}
+                  </Text>
+                </VStack>
+                <HStack gap={1.5}>
                   {project.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="px-2 py-0.5 rounded-md bg-foreground/5 text-xs text-muted"
-                    >
-                      {tag}
-                    </span>
+                    <Token key={tag} label={tag} color="gray" />
                   ))}
-                </div>
-              </Link>
-            </SpringDiv>
+                </HStack>
+              </VStack>
+            </ClickableCard>
           ))}
-        </div>
-        <div className="mt-8 text-center">
-          <Link
-            href="/projects"
-            className="text-sm text-muted hover:text-foreground transition-colors"
-          >
+        </Grid>
+        <HStack gap={0} className="justify-center">
+          <Link href="/projects">
             All projects &rarr;
           </Link>
-        </div>
-      </div>
-    </section>
+        </HStack>
+      </VStack>
+    </Section>
   );
 }

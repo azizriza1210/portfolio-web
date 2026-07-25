@@ -1,38 +1,26 @@
-"use client";
-
-import Link from "next/link";
-import { SpringDiv } from "@/components/motion/SpringDiv";
+import { VStack, HStack } from "@astryxdesign/core/Layout";
+import { Heading, Text } from "@astryxdesign/core/Text";
+import { Button } from "@astryxdesign/core/Button";
+import { Section } from "@astryxdesign/core/Section";
 
 export function Hero() {
   return (
-    <SpringDiv
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      className="py-20 sm:py-28 px-4 sm:px-6"
-    >
-      <div className="mx-auto max-w-3xl">
-        <h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-foreground">
-          Mohammad Aziz Riza
-        </h1>
-        <p className="mt-4 text-lg sm:text-xl text-muted max-w-xl">
-          Software developer building tools at the intersection of search,
-          retrieval, and language models.
-        </p>
-        <div className="mt-8 flex items-center gap-4">
-          <Link
-            href="/projects"
-            className="inline-flex items-center px-5 py-2.5 rounded-lg bg-foreground text-background text-sm font-medium hover:bg-foreground/90 transition-colors"
-          >
-            View projects
-          </Link>
-          <Link
-            href="/contact"
-            className="inline-flex items-center px-5 py-2.5 rounded-lg border border-border text-sm font-medium hover:bg-foreground/5 transition-colors"
-          >
-            Get in touch
-          </Link>
-        </div>
-      </div>
-    </SpringDiv>
+    <Section paddingBlock={10}>
+      <VStack gap={6} className="max-w-3xl mx-auto px-4">
+        <VStack gap={3}>
+          <Heading level={1} type="display-2" textWrap="balance">
+            Mohammad Aziz Riza
+          </Heading>
+          <Text type="body" color="secondary" textWrap="balance">
+            Software developer building tools at the intersection of search,
+            retrieval, and language models.
+          </Text>
+        </VStack>
+        <HStack gap={3}>
+          <Button label="View projects" variant="primary" href="/projects" />
+          <Button label="Get in touch" variant="secondary" href="/contact" />
+        </HStack>
+      </VStack>
+    </Section>
   );
 }

@@ -1,48 +1,56 @@
-import Link from "next/link";
+import { VStack } from "@astryxdesign/core/Layout";
+import { Heading, Text } from "@astryxdesign/core/Text";
+import { ClickableCard } from "@astryxdesign/core/ClickableCard";
+import { Token } from "@astryxdesign/core/Token";
+import { Section } from "@astryxdesign/core/Section";
+import { Grid } from "@astryxdesign/core/Grid";
+import { HStack } from "@astryxdesign/core/Layout";
 import { getProjectPosts } from "@/lib/mdx";
 
 export default function ProjectsPage() {
   const projects = getProjectPosts();
 
   return (
-    <div className="py-16 sm:py-20 px-4 sm:px-6">
-      <div className="mx-auto max-w-3xl">
-        <h1 className="text-3xl font-bold tracking-tight text-foreground">
-          Projects
-        </h1>
-        <p className="mt-2 text-muted">
-          Things I&apos;ve built at the intersection of search, retrieval, and
-          language models.
-        </p>
-        <div className="mt-10 grid gap-4 sm:grid-cols-2">
+    <Section>
+      <VStack gap={8} className="max-w-3xl mx-auto px-4">
+        <VStack gap={2}>
+          <Heading level={1}>
+            Projects
+          </Heading>
+          <Text type="body" color="secondary">
+            Things I&apos;ve built at the intersection of search, retrieval, and
+            language models.
+          </Text>
+        </VStack>
+        <Grid columns={2} gap={4}>
           {projects.map((project) => (
-            <Link
+            <ClickableCard
               key={project.meta.slug}
+              label={project.meta.title}
               href={`/projects/${project.meta.slug}`}
-              className="block p-5 rounded-xl border border-border bg-surface hover:bg-surface/70 transition-colors h-full"
+              padding={5}
             >
-              <h2 className="font-medium text-foreground">
-                {project.meta.title}
-              </h2>
-              <p className="mt-1.5 text-sm text-muted line-clamp-2">
-                {project.meta.description}
-              </p>
-              {project.meta.tags && (
-                <div className="mt-3 flex flex-wrap gap-1.5">
-                  {project.meta.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="px-2 py-0.5 rounded-md bg-foreground/5 text-xs text-muted"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              )}
-            </Link>
+              <VStack gap={3}>
+                <VStack gap={1.5}>
+                  <Text type="body" weight="medium">
+                    {project.meta.title}
+                  </Text>
+                  <Text type="supporting" color="secondary">
+                    {project.meta.description}
+                  </Text>
+                </VStack>
+                {project.meta.tags && project.meta.tags.length > 0 && (
+                  <HStack gap={1.5}>
+                    {project.meta.tags.map((tag) => (
+                      <Token key={tag} label={tag} color="gray" />
+                    ))}
+                  </HStack>
+                )}
+              </VStack>
+            </ClickableCard>
           ))}
-        </div>
-      </div>
-    </div>
+        </Grid>
+      </VStack>
+    </Section>
   );
 }

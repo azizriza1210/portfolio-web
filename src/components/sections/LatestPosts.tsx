@@ -1,7 +1,9 @@
-"use client";
-
-import Link from "next/link";
-import { SpringDiv } from "@/components/motion/SpringDiv";
+import { VStack, HStack } from "@astryxdesign/core/Layout";
+import { Heading, Text } from "@astryxdesign/core/Text";
+import { ClickableCard } from "@astryxdesign/core/ClickableCard";
+import { Timestamp } from "@astryxdesign/core/Timestamp";
+import { Section } from "@astryxdesign/core/Section";
+import { Link } from "@astryxdesign/core/Link";
 
 const posts = [
   {
@@ -29,48 +31,37 @@ const posts = [
 
 export function LatestPosts() {
   return (
-    <section className="py-16 sm:py-20 px-4 sm:px-6 border-t border-border/50">
-      <div className="mx-auto max-w-3xl">
-        <SpringDiv
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-        >
-          <h2 className="text-2xl font-semibold tracking-tight text-foreground">
-            Latest Posts
-          </h2>
-        </SpringDiv>
-        <div className="mt-8 grid gap-4">
-          {posts.map((post, i) => (
-            <SpringDiv
+    <Section dividers={["top"]}>
+      <VStack gap={8} className="max-w-3xl mx-auto px-4">
+        <Heading level={2}>
+          Latest Posts
+        </Heading>
+        <VStack gap={4}>
+          {posts.map((post) => (
+            <ClickableCard
               key={post.slug}
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ delay: i * 0.1 }}
+              label={post.title}
+              href={`/blog/${post.slug}`}
+              padding={5}
             >
-              <Link
-                href={`/blog/${post.slug}`}
-                className="block p-5 rounded-xl border border-border bg-surface hover:bg-surface/70 transition-colors"
-              >
-                <time className="text-xs text-muted">{post.date}</time>
-                <h3 className="mt-1 font-medium text-foreground">
+              <VStack gap={1.5}>
+                <Timestamp value={post.date} format="date" color="secondary" />
+                <Text type="body" weight="medium">
                   {post.title}
-                </h3>
-                <p className="mt-1 text-sm text-muted">{post.description}</p>
-              </Link>
-            </SpringDiv>
+                </Text>
+                <Text type="supporting" color="secondary">
+                  {post.description}
+                </Text>
+              </VStack>
+            </ClickableCard>
           ))}
-        </div>
-        <div className="mt-8 text-center">
-          <Link
-            href="/blog"
-            className="text-sm text-muted hover:text-foreground transition-colors"
-          >
+        </VStack>
+        <HStack gap={0} className="justify-center">
+          <Link href="/blog">
             All posts &rarr;
           </Link>
-        </div>
-      </div>
-    </section>
+        </HStack>
+      </VStack>
+    </Section>
   );
 }

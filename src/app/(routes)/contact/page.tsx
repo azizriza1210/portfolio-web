@@ -1,7 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { SpringDiv } from "@/components/motion/SpringDiv";
+import { VStack } from "@astryxdesign/core/Layout";
+import { Heading, Text } from "@astryxdesign/core/Text";
+import { Section } from "@astryxdesign/core/Section";
+import { FormLayout } from "@astryxdesign/core/FormLayout";
+import { TextInput } from "@astryxdesign/core/TextInput";
+import { TextArea } from "@astryxdesign/core/TextArea";
+import { Button } from "@astryxdesign/core/Button";
+import { Banner } from "@astryxdesign/core/Banner";
 import { contactSchema, type ContactFormData } from "@/lib/validations/contact";
 import type { ZodError } from "zod";
 
@@ -14,17 +21,17 @@ export default function ContactPage() {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
 
-  function handleChange(
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) {
-    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-    if (errors[e.target.name]) {
-      setErrors((prev) => {
-        const next = { ...prev };
-        delete next[e.target.name];
-        return next;
-      });
-    }
+  function handleFieldChange(field: keyof ContactFormData) {
+    return (value: string) => {
+      setFormData((prev) => ({ ...prev, [field]: value }));
+      if (errors[field]) {
+        setErrors((prev) => {
+          const next = { ...prev };
+          delete next[field];
+          return next;
+        });
+      }
+    };
   }
 
   async function handleSubmit(e: React.FormEvent) {
@@ -64,135 +71,80 @@ export default function ContactPage() {
     }
   }
 
+  if (status === "success") {
+    return (
+      <Section>
+        <VStack gap={4} className="max-w-3xl mx-auto px-4" hAlign="center">
+          <Heading level={1} type="display-3">
+            Message sent!
+          </Heading>
+          <Text type="body" color="secondary">
+            I&apos;ll get back to you as soon as possible.
+          </Text>
+          <Button
+            label="Send another message"
+            variant="secondary"
+            onClick={() => setStatus("idle")}
+          />
+        </VStack>
+      </Section>
+    );
+  }
+
   return (
-    <div className="py-16 sm:py-20 px-4 sm:px-6">
-      <div className="mx-auto max-w-3xl">
-        <SpringDiv
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-        >
-          <h1 className="text-3xl font-bold tracking-tight text-foreground">
+    <Section>
+      <VStack gap={8} className="max-w-3xl mx-auto px-4">
+        <VStack gap={2}>
+          <Heading level={1} type="display-3">
             Contact
-          </h1>
-          <p className="mt-2 text-muted">
+          </Heading>
+          <Text type="body" color="secondary">
             Have a question or want to work together? Send me a message.
-          </p>
-        </SpringDiv>
+          </Text>
+        </VStack>
 
-        <SpringDiv
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-          className="mt-10"
-        >
-          {status === "success" ? (
-            <div className="p-8 rounded-xl border border-border bg-surface text-center">
-              <p className="text-lg font-medium text-foreground">
-                Message sent!
-              </p>
-              <p className="mt-1 text-sm text-muted">
-                I&apos;ll get back to you as soon as possible.
-              </p>
-              <button
-                type="button"
-                onClick={() => setStatus("idle")}
-                className="mt-4 text-sm text-accent hover:underline"
-              >
-                Send another message
-              </button>
-            </div>
-          ) : (
-            <form
-              onSubmit={handleSubmit}
-              className="space-y-5"
-              noValidate
-            >
-              <div>
-                <label
-                  htmlFor="name"
-                  className="block text-sm font-medium text-foreground mb-1.5"
-                >
-                  Name
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  className={`w-full px-4 py-2.5 rounded-lg border bg-background text-foreground placeholder:text-muted/50 focus:outline-none focus:ring-2 focus:ring-accent/30 transition-shadow ${
-                    errors.name ? "border-red-500" : "border-border"
-                  }`}
-                  placeholder="Your name"
-                />
-                {errors.name && (
-                  <p className="mt-1 text-sm text-red-500">{errors.name}</p>
-                )}
-              </div>
+        <form onSubmit={handleSubmit} noValidate>
+          <FormLayout direction="vertical">
+            <TextInput
+              label="Name"
+              value={formData.name}
+              onChange={handleFieldChange("name")}
+              placeholder="Your name"
+              isRequired
+              status={errors.name ? { type: "error", message: errors.name } : undefined}
+            />
+            <TextInput
+              label="Email"
+              type="email"
+              value={formData.email}
+              onChange={handleFieldChange("email")}
+              placeholder="you@example.com"
+              isRequired
+              status={errors.email ? { type: "error", message: errors.email } : undefined}
+            />
+            <TextArea
+              label="Message"
+              value={formData.message}
+              onChange={handleFieldChange("message")}
+              placeholder="Tell me about your project or idea..."
+              isRequired
+              status={errors.message ? { type: "error", message: errors.message } : undefined}
+            />
+            <Button
+              label={status === "submitting" ? "Sending..." : "Send message"}
+              type="submit"
+              variant="primary"
+              isDisabled={status === "submitting"}
+            />
+          </FormLayout>
+        </form>
 
-              <div>
-                <label
-                  htmlFor="email"
-                  className="block text-sm font-medium text-foreground mb-1.5"
-                >
-                  Email
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  className={`w-full px-4 py-2.5 rounded-lg border bg-background text-foreground placeholder:text-muted/50 focus:outline-none focus:ring-2 focus:ring-accent/30 transition-shadow ${
-                    errors.email ? "border-red-500" : "border-border"
-                  }`}
-                  placeholder="you@example.com"
-                />
-                {errors.email && (
-                  <p className="mt-1 text-sm text-red-500">{errors.email}</p>
-                )}
-              </div>
-
-              <div>
-                <label
-                  htmlFor="message"
-                  className="block text-sm font-medium text-foreground mb-1.5"
-                >
-                  Message
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  rows={5}
-                  value={formData.message}
-                  onChange={handleChange}
-                  className={`w-full px-4 py-2.5 rounded-lg border bg-background text-foreground placeholder:text-muted/50 focus:outline-none focus:ring-2 focus:ring-accent/30 transition-shadow resize-none ${
-                    errors.message ? "border-red-500" : "border-border"
-                  }`}
-                  placeholder="Tell me about your project or idea..."
-                />
-                {errors.message && (
-                  <p className="mt-1 text-sm text-red-500">{errors.message}</p>
-                )}
-              </div>
-
-              <button
-                type="submit"
-                disabled={status === "submitting"}
-                className="inline-flex items-center px-6 py-2.5 rounded-lg bg-foreground text-background text-sm font-medium hover:bg-foreground/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {status === "submitting" ? "Sending..." : "Send message"}
-              </button>
-
-              {status === "error" && (
-                <p className="text-sm text-red-500">
-                  Something went wrong. Please try again.
-                </p>
-              )}
-            </form>
-          )}
-        </SpringDiv>
-      </div>
-    </div>
+        {status === "error" && (
+          <Banner title="Error" status="error">
+            Something went wrong. Please try again.
+          </Banner>
+        )}
+      </VStack>
+    </Section>
   );
 }

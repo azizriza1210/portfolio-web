@@ -1,48 +1,54 @@
-import Link from "next/link";
+import { VStack } from "@astryxdesign/core/Layout";
+import { Heading, Text } from "@astryxdesign/core/Text";
+import { ClickableCard } from "@astryxdesign/core/ClickableCard";
+import { Timestamp } from "@astryxdesign/core/Timestamp";
+import { Token } from "@astryxdesign/core/Token";
+import { Section } from "@astryxdesign/core/Section";
+import { HStack } from "@astryxdesign/core/Layout";
 import { getBlogPosts } from "@/lib/mdx";
 
 export default function BlogPage() {
   const posts = getBlogPosts();
 
   return (
-    <div className="py-16 sm:py-20 px-4 sm:px-6">
-      <div className="mx-auto max-w-3xl">
-        <h1 className="text-3xl font-bold tracking-tight text-foreground">
-          Blog
-        </h1>
-        <p className="mt-2 text-muted">
-          Thoughts on RAG, search, and building with LLMs.
-        </p>
-        <div className="mt-10 grid gap-4">
+    <Section>
+      <VStack gap={8} className="max-w-3xl mx-auto px-4">
+        <VStack gap={2}>
+          <Heading level={1}>
+            Blog
+          </Heading>
+          <Text type="body" color="secondary">
+            Thoughts on RAG, search, and building with LLMs.
+          </Text>
+        </VStack>
+        <VStack gap={4}>
           {posts.map((post) => (
-            <Link
+            <ClickableCard
               key={post.meta.slug}
+              label={post.meta.title}
               href={`/blog/${post.meta.slug}`}
-              className="block p-5 rounded-xl border border-border bg-surface hover:bg-surface/70 transition-colors"
+              padding={5}
             >
-              <time className="text-xs text-muted">{post.meta.date}</time>
-              <h2 className="mt-1 font-medium text-foreground">
-                {post.meta.title}
-              </h2>
-              <p className="mt-1 text-sm text-muted">
-                {post.meta.description}
-              </p>
-              {post.meta.tags && (
-                <div className="mt-3 flex flex-wrap gap-1.5">
-                  {post.meta.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="px-2 py-0.5 rounded-md bg-foreground/5 text-xs text-muted"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              )}
-            </Link>
+              <VStack gap={2}>
+                <Timestamp value={post.meta.date} format="date" color="secondary" />
+                <Text type="body" weight="medium">
+                  {post.meta.title}
+                </Text>
+                <Text type="supporting" color="secondary">
+                  {post.meta.description}
+                </Text>
+                {post.meta.tags && post.meta.tags.length > 0 && (
+                  <HStack gap={1.5}>
+                    {post.meta.tags.map((tag) => (
+                      <Token key={tag} label={tag} color="gray" />
+                    ))}
+                  </HStack>
+                )}
+              </VStack>
+            </ClickableCard>
           ))}
-        </div>
-      </div>
-    </div>
+        </VStack>
+      </VStack>
+    </Section>
   );
 }
