@@ -9,6 +9,13 @@ export function Hero() {
   return (
     <Section variant="transparent" padding={0} className="overflow-hidden">
       <div className="relative min-h-[calc(100vh-3.5rem)] flex flex-col">
+        {/* Background name — massive, behind everything */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none z-0">
+          <h2 className="text-[clamp(4rem,14vw,12rem)] font-bold leading-[0.8] tracking-[-0.05em] text-center whitespace-nowrap text-[var(--color-text-primary)] opacity-5">
+            AZIZ RIZA
+          </h2>
+        </div>
+
         {/* Stamp — lime circle near top of photo */}
         <div className="absolute top-8 left-8 lg:left-16 z-20 pointer-events-none">
           <div className="w-12 h-12 rounded-full border-2 border-[var(--color-accent)] flex items-center justify-center">
@@ -33,15 +40,13 @@ export function Hero() {
         <div className="relative z-10 flex-1 grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-0 items-center max-w-6xl mx-auto w-full px-4 lg:px-8 py-12">
           {/* Left: portrait (40%) */}
           <div className="lg:col-span-2 flex justify-center lg:justify-start order-2 lg:order-1">
-            <div className="relative w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96">
-              {/* Ring behind photo — centered on face */}
-              <div className="absolute inset-0 rounded-full border border-[var(--color-border-emphasized)] opacity-20" />
+            <div className="relative w-64 h-80 sm:w-72 sm:h-96 lg:w-80 lg:h-[28rem]">
               <Image
                 src="/me-cutout.png"
                 alt="Mohammad Aziz Riza"
                 fill
-                className="object-cover object-top scale-125"
-                sizes="(max-width: 1024px) 320px, 384px"
+                className="object-contain object-bottom"
+                sizes="(max-width: 1024px) 288px, 320px"
                 priority
               />
             </div>
