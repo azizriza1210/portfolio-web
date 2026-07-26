@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { VStack, HStack } from "@astryxdesign/core/Layout";
+import { VStack } from "@astryxdesign/core/Layout";
 import { Text } from "@astryxdesign/core/Text";
 import { Section } from "@astryxdesign/core/Section";
 
@@ -11,37 +11,29 @@ const techStack = ["Python", "TypeScript", "Next.js", "LangChain", "PostgreSQL"]
 export function Hero() {
   return (
     <Section variant="transparent" padding={0} className="overflow-hidden">
-      <div className="relative min-h-[calc(100vh-3.5rem)] flex flex-col justify-between">
-        {/* Full-width name — behind everything */}
-        <div className="absolute inset-0 flex items-start justify-center pointer-events-none select-none pt-12 lg:pt-20 z-0">
-          <h1 className="!text-[clamp(4rem,14vw,12rem)] font-normal leading-[0.85] tracking-[-0.04em] text-center whitespace-nowrap text-[var(--color-text-primary)] opacity-15">
+      <div className="relative min-h-[calc(100vh-3.5rem)] flex flex-col">
+        {/* Background name — massive, behind photo */}
+        <div className="absolute inset-0 flex items-start justify-center pointer-events-none select-none pt-4 lg:pt-8 z-0">
+          <h1 className="text-[clamp(5rem,16vw,14rem)] font-normal leading-[0.8] tracking-[-0.05em] text-center whitespace-nowrap text-[var(--color-text-primary)] opacity-10">
             AZIZ RIZA
           </h1>
         </div>
 
-        {/* Photo — centered, large, over the name */}
-        <div className="relative z-10 flex justify-center flex-1 items-center pt-8 pb-4 lg:pt-12 lg:pb-0">
-          <div className="relative w-64 h-80 lg:w-72 lg:h-[28rem] xl:w-80 xl:h-[32rem]">
+        {/* Photo — centered, large, overlapping name */}
+        <div className="relative z-10 flex justify-center flex-1 items-center pt-16 lg:pt-24">
+          <div className="relative w-56 h-[22rem] lg:w-64 lg:h-[26rem] xl:w-72 xl:h-[30rem]">
             <Image
-              src="/me.png"
+              src="/me-cutout.png"
               alt="Mohammad Aziz Riza"
               fill
-              className="object-cover object-top"
-              sizes="(max-width: 1024px) 256px, (max-width: 1280px) 288px, 320px"
+              className="object-contain object-bottom"
+              sizes="(max-width: 1024px) 224px, (max-width: 1280px) 256px, 288px"
               priority
-            />
-            {/* Fade edges — soft mask so beige background blends */}
-            <div className="absolute inset-0 pointer-events-none"
-              style={{
-                background:
-                  "linear-gradient(to bottom, transparent 80%, var(--color-background-body) 100%), " +
-                  "linear-gradient(to right, var(--color-background-body) 0%, transparent 8%, transparent 92%, var(--color-background-body) 100%)",
-              }}
             />
           </div>
         </div>
 
-        {/* Bottom row: left intro + CTA, right skills */}
+        {/* Bottom content row */}
         <div className="relative z-10 w-full max-w-6xl mx-auto px-4 pb-8 lg:pb-12 grid grid-cols-1 lg:grid-cols-2 gap-8 items-end">
           <VStack gap={5}>
             <Text type="body" color="secondary" textWrap="balance" className="max-w-md">
