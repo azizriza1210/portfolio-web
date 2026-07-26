@@ -9,39 +9,39 @@ export function Hero() {
   return (
     <Section variant="transparent" padding={0} className="overflow-hidden">
       <div className="relative min-h-[calc(100vh-3.5rem)] flex flex-col">
-        {/* Stamp — lime circle top-left of photo */}
-        <div className="absolute top-6 left-4 lg:left-12 z-20 pointer-events-none">
+        {/* Stamp — lime circle near top of photo */}
+        <div className="absolute top-8 left-8 lg:left-16 z-20 pointer-events-none">
           <div className="w-12 h-12 rounded-full border-2 border-[var(--color-accent)] flex items-center justify-center">
             <span className="text-[var(--color-accent)] text-xs font-bold tracking-widest">AR</span>
           </div>
         </div>
 
-        {/* Hand-drawn arrow — left of photo */}
+        {/* Hand-drawn arrow — pointing toward face */}
         <svg
-          className="absolute top-1/3 left-2 lg:left-8 w-16 h-24 z-20 pointer-events-none opacity-60"
+          className="absolute top-1/2 left-1 lg:left-4 w-12 h-16 z-20 pointer-events-none opacity-50"
           viewBox="0 0 60 100"
           fill="none"
           stroke="var(--color-text-secondary)"
           strokeWidth="1.5"
           strokeLinecap="round"
         >
-          <path d="M50 10 Q15 20 20 50 Q25 75 45 80" />
-          <path d="M40 70 L45 80 L35 85" />
+          <path d="M45 10 Q10 20 15 50 Q20 75 40 80" />
+          <path d="M35 70 L40 80 L30 85" />
         </svg>
 
         {/* Main grid */}
         <div className="relative z-10 flex-1 grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-0 items-center max-w-6xl mx-auto w-full px-4 lg:px-8 py-12">
           {/* Left: portrait (40%) */}
           <div className="lg:col-span-2 flex justify-center lg:justify-start order-2 lg:order-1">
-            <div className="relative w-56 h-[22rem] sm:w-64 sm:h-[26rem] lg:w-72 lg:h-[30rem]">
-              {/* Ring behind photo */}
-              <div className="absolute inset-0 rounded-full border border-[var(--color-border-emphasized)] opacity-30 scale-110" />
+            <div className="relative w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96">
+              {/* Ring behind photo — centered on face */}
+              <div className="absolute inset-0 rounded-full border border-[var(--color-border-emphasized)] opacity-20" />
               <Image
                 src="/me-cutout.png"
                 alt="Mohammad Aziz Riza"
                 fill
-                className="object-contain object-bottom"
-                sizes="(max-width: 1024px) 224px, 256px"
+                className="object-cover object-top scale-125"
+                sizes="(max-width: 1024px) 320px, 384px"
                 priority
               />
             </div>
